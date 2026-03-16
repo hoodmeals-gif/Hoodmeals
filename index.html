@@ -380,7 +380,7 @@ footer p{font-size:11px;color:rgba(255,255,255,0.2);}
 
 <!-- NAV -->
 <nav id="topnav">
-  <a href="#" class="nav-logo">
+  <a href="#" class="nav-logo" id="logoTap">
     <img src="https://raw.githubusercontent.com/hoodmeals-gif/Hoodmeals/main/logo.png" alt="Hood Meals" id="navLogo" onerror="this.style.display='none'"/>
     <span class="nav-logo-text">Hood<span>Meals</span></span>
   </a>
@@ -765,7 +765,15 @@ var obs=new IntersectionObserver(function(entries){
 },{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
 
-/* ===== CONTACT FORM ===== */
+/* ===== MOBILE ADMIN — TAP LOGO 5 TIMES ===== */
+var tapCount=0,tapTimer=null;
+document.getElementById('logoTap').addEventListener('click',function(e){
+  e.preventDefault();
+  tapCount++;
+  clearTimeout(tapTimer);
+  tapTimer=setTimeout(function(){tapCount=0;},2000);
+  if(tapCount>=5){tapCount=0;openLogin();}
+});
 document.getElementById('contactForm').addEventListener('submit',function(e){
   e.preventDefault();
   var n=document.getElementById('fn').value,em=document.getElementById('fe').value,sv=document.getElementById('fs').value,dt=document.getElementById('fd').value,msg=document.getElementById('fm').value;
