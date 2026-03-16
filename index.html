@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hood Meals — Southern Cuisine · Sicklerville, NJ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --purple:#4a1080;--purple2:#6b2ba8;--purple-light:#f5eeff;
+  --red:#a81830;--red2:#c8202e;--cream:#faf7f4;--white:#ffffff;
+  --dark:#0d0810;--text:#2a1f35;--muted:#7a6a88;
+  --border:rgba(74,16,128,0.12);--gold:#c9a84c;--green:#00c853;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;}
+
+/* NAV */
+#topnav{position:fixed;top:0;left:0;right:0;z-index:9999;height:64px;background:#0d0810;display:flex;justify-content:space-between;align-items:center;padding:0 48px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo img{height:44px;width:auto;object-fit:contain;}
+.nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--white);letter-spacing:2px;text-transform:uppercase;}
+.nav-logo-text span{color:var(--gold);}
+.nav-links{display:flex;align-items:center;height:64px;}
+.nav-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:0 14px;height:64px;display:flex;align-items:center;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;}
+.nav-links a:hover{color:var(--white);border-bottom-color:var(--gold);}
+.nav-links a.active{color:var(--white);border-bottom-color:var(--gold);}
+.nav-book{background:var(--red)!important;color:var(--white)!important;border-bottom:none!important;margin-left:10px;padding:0 22px!important;font-weight:700!important;height:40px!important;display:flex!important;align-items:center!important;transition:background 0.2s!important;}
+.nav-book:hover{background:var(--red2)!important;}
+
+/* HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;z-index:10001;}
+.hamburger span{width:24px;height:2px;background:var(--white);display:block;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* MOBILE MENU */
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:#0d0810;z-index:9998;flex-direction:column;padding:32px 24px;gap:4px;overflow-y:auto;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{color:rgba(255,255,255,0.6);text-decoration:none;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:18px 0;border-bottom:1px solid rgba(255,255,255,0.06);transition:color 0.2s;display:flex;align-items:center;justify-content:space-between;}
+.mobile-menu a:hover{color:var(--gold);}
+.mobile-menu a::after{content:'→';opacity:0.3;}
+.mobile-menu .mob-book{background:var(--red);color:var(--white)!important;padding:18px 24px!important;margin-top:16px;text-align:center;justify-content:center;border:none!important;}
+.mobile-menu .mob-book::after{display:none;}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--dark);display:flex;flex-direction:column;justify-content:flex-end;padding:0 60px 100px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(160deg,rgba(74,16,128,0.95) 0%,rgba(13,8,16,0.85) 45%,rgba(168,24,48,0.9) 100%);}
+.hero-texture{position:absolute;inset:0;opacity:0.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='1' height='1' fill='white'/%3E%3C/svg%3E");background-size:4px 4px;}
+.hero-line{position:absolute;top:0;left:60px;width:1px;height:100%;background:linear-gradient(to bottom,transparent,rgba(201,168,76,0.3),transparent);}
+.hero-content{position:relative;z-index:2;max-width:800px;}
+.hero-logo{width:220px;max-width:65%;object-fit:contain;margin-bottom:24px;filter:drop-shadow(0 8px 32px rgba(0,0,0,0.4));opacity:0;animation:fadeUp 0.8s 0.2s forwards;}
+.hero-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:20px;opacity:0;animation:fadeUp 0.7s 0.4s forwards;}
+.hero-eyebrow-line{width:40px;height:1px;background:var(--gold);}
+.hero-eyebrow span{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,9vw,118px);font-weight:600;line-height:0.92;color:var(--white);margin-bottom:20px;opacity:0;animation:fadeUp 0.8s 0.6s forwards;}
+.hero-title em{font-style:italic;color:var(--gold);}
+.hero-desc{font-size:16px;color:rgba(255,255,255,0.5);max-width:460px;line-height:1.8;font-weight:300;margin-bottom:36px;opacity:0;animation:fadeUp 0.8s 0.8s forwards;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s 1s forwards;}
+.btn-primary{background:var(--red);color:var(--white);text-decoration:none;font-weight:600;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:16px 36px;transition:background 0.2s,transform 0.2s;display:inline-block;}
+.btn-primary:hover{background:var(--red2);transform:translateY(-2px);}
+.btn-ghost{border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;padding:16px 32px;transition:all 0.2s;display:inline-block;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.hero-stats{position:absolute;right:60px;bottom:100px;z-index:2;display:flex;flex-direction:column;gap:28px;opacity:0;animation:fadeUp 0.8s 1.1s forwards;}
+.hstat{text-align:right;padding-right:16px;border-right:1px solid rgba(201,168,76,0.3);}
+.hstat-val{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:600;color:var(--gold);line-height:1;}
+.hstat-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:4px;}
+
+/* TICKER */
+.ticker{overflow:hidden;background:var(--purple);padding:14px 0;}
+.ticker-track{display:flex;width:max-content;animation:ticker 30s linear infinite;}
+.ticker-item{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;letter-spacing:1px;padding:0 32px;color:rgba(255,255,255,0.6);white-space:nowrap;}
+.ticker-item b{color:var(--gold);font-style:normal;font-weight:400;margin:0 8px;}
+
+/* SHARED */
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.eyebrow-line{width:24px;height:1px;background:var(--gold);}
+.eyebrow span{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,62px);font-weight:600;line-height:1.05;margin-bottom:48px;}
+.section-title em{font-style:italic;color:var(--purple);}
+.section-title .red{color:var(--red);}
+.section-title .gold{color:var(--gold);}
+
+/* ABOUT */
+.about{padding:100px 48px;background:var(--white);}
+.about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.about-visual{position:relative;}
+.about-img{width:100%;aspect-ratio:3/4;background:linear-gradient(160deg,var(--purple) 0%,var(--red) 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.about-img-text{font-family:'Cormorant Garamond',serif;font-size:160px;font-weight:600;color:rgba(255,255,255,0.05);font-style:italic;position:absolute;}
+.about-img-inner{text-align:center;color:var(--white);position:relative;z-index:1;}
+.about-img-inner .icon{font-size:52px;margin-bottom:10px;display:block;}
+.about-img-inner p{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;opacity:0.7;}
+.about-badge{position:absolute;bottom:-18px;right:-18px;background:var(--gold);color:var(--dark);padding:18px 24px;font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:700;line-height:1.5;text-align:center;}
+.about-content p{font-size:15px;color:var(--muted);line-height:1.9;margin-bottom:18px;}
+.about-content strong{color:var(--text);font-weight:600;}
+.rag{margin-top:32px;border:1px solid var(--border);padding:28px;}
+.rag-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--purple);margin-bottom:18px;}
+.rag-item{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--border);}
+.rag-item:last-child{border-bottom:none;}
+.rag-letter{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--gold);width:26px;flex-shrink:0;line-height:1;}
+.rag-item span{font-size:14px;color:var(--muted);}
+.rag-item strong{color:var(--text);}
+
+/* SERVICES */
+.services{padding:100px 48px;background:var(--cream);}
+.services-inner{max-width:1100px;margin:0 auto;}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+.svc-card{background:var(--white);padding:48px 40px;position:relative;overflow:hidden;transition:background 0.3s;}
+.svc-card:hover{background:#fdfbff;}
+.svc-card::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:linear-gradient(to bottom,var(--purple),var(--red));transition:height 0.4s;}
+.svc-card:hover::before{height:100%;}
+.svc-num{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:600;color:rgba(74,16,128,0.06);position:absolute;top:18px;right:24px;line-height:1;}
+.svc-icon{font-size:30px;margin-bottom:18px;display:block;}
+.svc-card h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--text);margin-bottom:10px;}
+.svc-card p{font-size:14px;color:var(--muted);line-height:1.8;}
+.svc-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.stag{background:var(--purple-light);color:var(--purple);font-size:11px;font-weight:600;padding:4px 12px;}
+
+/* STORY */
+.story{padding:100px 48px;background:var(--purple);position:relative;overflow:hidden;}
+.story::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ccircle cx='40' cy='40' r='1' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E");background-size:80px 80px;}
+.story-inner{max-width:780px;margin:0 auto;text-align:center;position:relative;z-index:1;}
+.story .eyebrow{justify-content:center;}
+.story .eyebrow-line{background:rgba(255,255,255,0.3);}
+.story .eyebrow span{color:rgba(255,255,255,0.5);}
+.story .section-title{color:var(--white);margin-bottom:32px;}
+.story-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3vw,30px);font-style:italic;color:rgba(255,255,255,0.8);line-height:1.55;margin-bottom:28px;padding:0 32px;position:relative;}
+.story-quote::before{content:'\201C';font-size:90px;color:rgba(201,168,76,0.15);position:absolute;top:-16px;left:0;font-family:'Cormorant Garamond',serif;line-height:1;}
+.story-body{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.9;font-weight:300;margin-bottom:40px;}
+.story-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:40px;}
+.pillar{background:rgba(255,255,255,0.05);padding:28px 20px;text-align:center;}
+.pillar-icon{font-size:26px;margin-bottom:10px;display:block;}
+.pillar h4{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--gold);margin-bottom:5px;}
+.pillar p{font-size:11px;color:rgba(255,255,255,0.35);letter-spacing:1px;text-transform:uppercase;font-weight:500;}
+
+/* HOOD STARS */
+.hoodstars{padding:100px 48px;background:var(--white);}
+.hoodstars-inner{max-width:1100px;margin:0 auto;}
+.hs-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.hs-content p{font-size:15px;color:var(--muted);line-height:1.9;margin-bottom:16px;}
+.hs-content strong{color:var(--text);font-weight:600;}
+.hs-card{background:var(--dark);padding:48px;position:relative;overflow:hidden;}
+.hs-card::before{content:'⭐';font-size:140px;position:absolute;bottom:-16px;right:-8px;opacity:0.05;line-height:1;}
+.hs-card-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.hs-card-eyebrow::before{content:'';width:16px;height:1px;background:var(--gold);display:block;}
+.hs-card h3{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--white);margin-bottom:14px;line-height:1.1;}
+.hs-card p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.8;margin-bottom:24px;}
+.btn-gold{background:var(--gold);color:var(--dark);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:13px 28px;display:inline-block;transition:all 0.2s;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,0.3);}
+
+/* HOOD NEWS */
+.hoodnews{padding:0 48px 100px;background:var(--white);}
+.hoodnews-inner{max-width:1100px;margin:0 auto;}
+.hn-card{display:grid;grid-template-columns:auto 1fr;border:1px solid var(--border);overflow:hidden;}
+.hn-accent{width:4px;background:linear-gradient(to bottom,var(--purple),var(--red));}
+.hn-body{padding:40px 44px;}
+.hn-body h3{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--text);margin-bottom:10px;}
+.hn-body p{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:22px;}
+.btn-outline{border:1px solid var(--purple);color:var(--purple);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:12px 24px;display:inline-block;transition:all 0.2s;}
+.btn-outline:hover{background:var(--purple);color:var(--white);}
+
+/* CHEF */
+.chef{padding:100px 48px;background:var(--dark);}
+.chef-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.chef-visual{background:linear-gradient(160deg,var(--purple) 0%,var(--red) 100%);aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.chef-visual::before{content:'LM';font-family:'Cormorant Garamond',serif;font-size:180px;font-weight:600;color:rgba(255,255,255,0.04);position:absolute;bottom:-16px;right:-8px;line-height:1;}
+.chef-icon{font-size:64px;margin-bottom:16px;position:relative;z-index:1;}
+.chef-visual-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--white);position:relative;z-index:1;text-align:center;}
+.chef-visual-title{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-top:6px;position:relative;z-index:1;text-align:center;padding:0 20px;}
+.chef-content .eyebrow-line{background:var(--gold);}
+.chef-content .eyebrow span{color:var(--gold);}
+.chef-content .section-title{color:var(--white);}
+.chef-content .section-title em{color:var(--gold);}
+.chef-content p{font-size:15px;color:rgba(255,255,255,0.45);line-height:1.9;margin-bottom:16px;}
+.chef-content strong{color:rgba(255,255,255,0.85);font-weight:600;}
+.chef-quote{margin-top:28px;border-left:2px solid var(--gold);padding:18px 24px;}
+.chef-quote p{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;color:rgba(255,255,255,0.65);line-height:1.55;margin:0;}
+.chef-quote cite{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-style:normal;display:block;margin-top:10px;}
+
+/* PAYMENT */
+.payment{padding:100px 48px;background:var(--white);}
+.pay-wrap{max-width:1100px;margin:0 auto;}
+.pay-card{display:flex;align-items:center;gap:20px;background:var(--dark);color:var(--white);text-decoration:none;padding:24px 32px;border:1px solid rgba(255,255,255,0.06);transition:transform 0.2s,box-shadow 0.2s;max-width:420px;}
+.pay-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.2);}
+.pay-icon{width:50px;height:50px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.pay-info{display:flex;flex-direction:column;gap:3px;}
+.pay-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);font-weight:600;}
+.pay-handle{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--green);font-weight:600;}
+.pay-arrow{margin-left:auto;color:rgba(255,255,255,0.2);font-size:20px;}
+.pay-note{margin-top:20px;font-size:13px;color:var(--muted);line-height:1.8;max-width:480px;}
+.pay-note strong{color:var(--text);}
+
+/* CONTACT */
+.contact{padding:100px 48px;background:var(--cream);}
+.contact-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+.contact-left>p{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:36px;}
+.contact-methods{display:flex;flex-direction:column;gap:2px;}
+.contact-method{display:flex;align-items:center;gap:18px;text-decoration:none;color:var(--text);padding:18px 20px;background:var(--white);border-left:2px solid transparent;transition:all 0.2s;}
+.contact-method:hover{border-left-color:var(--purple);background:#fdfbff;transform:translateX(4px);}
+.cm-icon{width:38px;height:38px;background:var(--purple-light);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.cm-info{display:flex;flex-direction:column;gap:2px;}
+.cm-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.cm-val{font-size:14px;font-weight:600;color:var(--text);}
+.contact-method:hover .cm-val{color:var(--purple);}
+.contact-form{display:flex;flex-direction:column;gap:14px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.form-group input,.form-group select,.form-group textarea{background:var(--white);border:1px solid var(--border);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;padding:13px 16px;outline:none;transition:border-color 0.2s;resize:none;-webkit-appearance:none;border-radius:0;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--purple);}
+.form-group textarea{min-height:100px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-submit{background:var(--purple);color:var(--white);border:none;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;padding:16px 36px;cursor:pointer;transition:background 0.2s,transform 0.2s;align-self:flex-start;}
+.form-submit:hover{background:var(--purple2);transform:translateY(-2px);}
+.form-success{display:none;background:rgba(74,16,128,0.05);border:1px solid rgba(74,16,128,0.15);padding:14px 18px;font-size:13px;color:var(--purple);font-weight:500;}
+
+/* CTA */
+.cta-band{padding:100px 48px;background:var(--red);text-align:center;position:relative;overflow:hidden;}
+.cta-band::before{content:'HOOD MEALS';font-family:'Cormorant Garamond',serif;font-size:160px;font-weight:600;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,0.04);pointer-events:none;white-space:nowrap;font-style:italic;}
+.cta-band .eyebrow{justify-content:center;}
+.cta-band .eyebrow-line{background:rgba(255,255,255,0.3);}
+.cta-band .eyebrow span{color:rgba(255,255,255,0.5);}
+.cta-band h2{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,8vw,88px);font-weight:600;font-style:italic;color:var(--white);line-height:1;margin-bottom:14px;position:relative;}
+.cta-band p{font-size:15px;color:rgba(255,255,255,0.55);max-width:400px;margin:0 auto 40px;line-height:1.8;}
+.btn-white{background:var(--white);color:var(--red);text-decoration:none;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:16px 40px;transition:transform 0.2s,box-shadow 0.2s;display:inline-block;}
+.btn-white:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.15);}
+
+/* FOOTER */
+footer{background:var(--dark);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid rgba(255,255,255,0.04);}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--white);}
+.f-logo span{color:var(--gold);}
+footer p{font-size:11px;color:rgba(255,255,255,0.2);}
+.f-links{display:flex;gap:24px;}
+.f-links a{font-size:11px;color:rgba(255,255,255,0.25);text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+.f-links a:hover{color:var(--gold);}
+
+/* LOGIN MODAL */
+#loginModal{display:none;position:fixed;inset:0;z-index:20000;background:rgba(0,0,0,0.95);backdrop-filter:blur(16px);align-items:center;justify-content:center;}
+#loginModal.open{display:flex;}
+.lb{background:#141414;border:1px solid rgba(201,168,76,0.2);padding:48px 40px;width:100%;max-width:380px;margin:20px;}
+.lb h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--gold);margin-bottom:6px;font-style:italic;}
+.lb p{font-size:13px;color:var(--muted);margin-bottom:28px;}
+.lf{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.lf label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.lf input{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;padding:13px 16px;outline:none;transition:border-color 0.2s;}
+.lf input:focus{border-color:var(--gold);}
+.l-btn{width:100%;background:var(--gold);color:var(--dark);border:none;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:15px;cursor:pointer;margin-top:8px;transition:opacity 0.2s;}
+.l-btn:hover{opacity:0.9;}
+.l-err{display:none;color:#ff6b6b;font-size:12px;margin-top:8px;padding:10px 14px;background:rgba(255,100,100,0.08);border:1px solid rgba(255,100,100,0.2);}
+.l-cancel{background:transparent;border:none;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Inter',sans-serif;margin-top:12px;display:block;width:100%;text-align:center;}
+
+/* ADMIN PANEL */
+#adminPanel{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.95);backdrop-filter:blur(12px);overflow-y:auto;}
+#adminPanel.open{display:block;}
+.aw{max-width:900px;margin:0 auto;padding:48px 28px 80px;}
+.ah{display:flex;justify-content:space-between;align-items:center;margin-bottom:44px;border-bottom:1px solid rgba(201,168,76,0.15);padding-bottom:20px;flex-wrap:wrap;gap:12px;}
+.ah h1{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;color:var(--gold);font-style:italic;}
+.a-close{background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--white);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;padding:10px 22px;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;}
+.a-close:hover{border-color:var(--gold);color:var(--gold);}
+.as{margin-bottom:40px;}
+.ast{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid rgba(201,168,76,0.15);font-style:italic;}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.af{display:flex;flex-direction:column;gap:5px;}
+.af.full{grid-column:1/-1;}
+.af label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);font-weight:600;}
+.af input,.af textarea,.af select{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);color:var(--white);font-family:'Inter',sans-serif;font-size:13px;padding:11px 14px;outline:none;transition:border-color 0.2s;resize:vertical;-webkit-appearance:none;}
+.af input:focus,.af textarea:focus{border-color:var(--gold);}
+.ac{background:#161616;border:1px solid rgba(255,255,255,0.05);padding:20px;margin-bottom:8px;}
+.ac-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.ac-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,0.3);}
+.a-del{background:transparent;border:none;color:#ff5555;font-size:16px;cursor:pointer;padding:4px 8px;}
+.a-add{background:transparent;border:1px solid rgba(201,168,76,0.25);color:var(--gold);font-family:'Inter',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;padding:9px 20px;cursor:pointer;transition:all 0.2s;margin-top:10px;}
+.a-add:hover{background:rgba(201,168,76,0.07);}
+.a-save{background:var(--gold);color:var(--dark);border:none;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:15px 36px;cursor:pointer;transition:transform 0.2s;}
+.a-save:hover{transform:translateY(-2px);}
+.a-ok{display:none;color:var(--gold);font-size:13px;font-weight:600;padding:12px 18px;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);margin-left:12px;}
+
+/* TOAST */
+.key-toast{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;padding:10px 22px;z-index:9000;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;}
+.key-toast.show{opacity:1;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* MOBILE */
+@media(max-width:768px){
+  #topnav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .hero{padding:0 24px 80px;}
+  .hero-stats{display:none;}
+  .hero-line{left:24px;}
+  .about,.services,.story,.hoodstars,.hoodnews,.chef,.payment,.contact,.cta-band{padding-left:20px;padding-right:20px;}
+  .about-inner,.chef-inner,.contact-inner,.hs-grid{grid-template-columns:1fr;gap:36px;}
+  .about-visual{display:none;}
+  .svc-grid{grid-template-columns:1fr;}
+  .story-pillars{grid-template-columns:1fr;gap:2px;}
+  .hn-card{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .ag{grid-template-columns:1fr;}
+  footer{padding:28px 20px;flex-direction:column;text-align:center;}
+  .f-links{justify-content:center;}
+  .aw{padding:28px 16px 60px;}
+}
+</style>
+</head>
+<body>
+
+<div class="key-toast" id="keyToast">H pressed — now press M to open admin</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal">
+  <div class="lb">
+    <h2>Admin Login</h2>
+    <p>Hood Meals — Owner Access Only</p>
+    <div class="lf"><label>Username</label><input type="text" id="lu" placeholder="hoodmeals" autocomplete="username"></div>
+    <div class="lf"><label>Password</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="l-btn" onclick="doLogin()">Sign In</button>
+    <div class="l-err" id="lerr">Incorrect username or password.</div>
+    <button class="l-cancel" onclick="closeLogin()">Cancel</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+  <div class="aw">
+    <div class="ah">
+      <h1>Admin Panel</h1>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="font-size:11px;color:var(--muted);">Logged in as Chef Tee</span>
+        <button class="a-close" onclick="closeAdmin()">Close &amp; Save</button>
+      </div>
+    </div>
+    <div class="as"><div class="ast">Hero</div>
+      <div class="ag">
+        <div class="af"><label>Eyebrow Text</label><input type="text" id="ae"></div>
+        <div class="af"><label>Title Line 1</label><input type="text" id="ah1"></div>
+        <div class="af"><label>Title Line 2 (italic/gold)</label><input type="text" id="ah2"></div>
+        <div class="af full"><label>Description</label><input type="text" id="adesc"></div>
+      </div>
+    </div>
+    <div class="as"><div class="ast">Services</div><div id="asl"></div><button class="a-add" onclick="addSvc()">+ Add Service</button></div>
+    <div class="as"><div class="ast">Hood Stars</div>
+      <div class="ag">
+        <div class="af full"><label>Description Paragraph 1</label><textarea id="ahs1" rows="3"></textarea></div>
+        <div class="af full"><label>Description Paragraph 2</label><textarea id="ahs2" rows="3"></textarea></div>
+      </div>
+    </div>
+    <div class="as"><div class="ast">Chef Tee</div>
+      <div class="ag">
+        <div class="af full"><label>Paragraph 1</label><textarea id="ac1" rows="3"></textarea></div>
+        <div class="af full"><label>Paragraph 2</label><textarea id="ac2" rows="3"></textarea></div>
+        <div class="af full"><label>Quote</label><textarea id="acq" rows="2"></textarea></div>
+      </div>
+    </div>
+    <div class="as"><div class="ast">Contact &amp; Payment</div>
+      <div class="ag">
+        <div class="af"><label>Email</label><input type="text" id="ace"></div>
+        <div class="af"><label>Facebook URL</label><input type="text" id="acf"></div>
+        <div class="af"><label>Cash App URL</label><input type="text" id="aca"></div>
+        <div class="af"><label>Cash App Handle</label><input type="text" id="acah"></div>
+      </div>
+    </div>
+    <div class="as"><div class="ast">Change Admin Password</div>
+      <div class="ag">
+        <div class="af"><label>New Password</label><input type="password" id="anp" placeholder="Leave blank to keep current"></div>
+        <div class="af"><label>Confirm</label><input type="password" id="anp2" placeholder="Repeat new password"></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:8px;">
+      <button class="a-save" onclick="saveAll()">💾 Save All Changes</button>
+      <div class="a-ok" id="aok">✓ Saved!</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="topnav">
+  <a href="#" class="nav-logo">
+    <img src="https://raw.githubusercontent.com/hoodmeals-gif/Hoodmeals/main/logo.png" alt="Hood Meals" id="navLogo" onerror="this.style.display='none'"/>
+    <span class="nav-logo-text">Hood<span>Meals</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#hoodstars">Hood Stars</a>
+    <a href="#hoodnews">Hood News</a>
+    <a href="#chef">Chef Tee</a>
+    <a href="#pay">Pay</a>
+    <a href="#contact" class="nav-book">Book Now</a>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#hoodstars" onclick="closeMenu()">Hood Stars</a>
+  <a href="#hoodnews" onclick="closeMenu()">Hood News</a>
+  <a href="#chef" onclick="closeMenu()">Chef Tee</a>
+  <a href="#pay" onclick="closeMenu()">Pay</a>
+  <a href="#contact" class="mob-book" onclick="closeMenu()">Book Now →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-texture"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <img src="https://raw.githubusercontent.com/hoodmeals-gif/Hoodmeals/main/logo.png" class="hero-logo" alt="Hood Meals" id="heroLogo" onerror="this.style.display='none'"/>
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span id="se">Berlin, NJ · Est. March 6, 2012</span>
+    </div>
+    <h1 class="hero-title" id="sh1">Hood<br><em id="sh2">Meals.</em></h1>
+    <p class="hero-desc" id="sdesc">Southern cuisine rooted in community, love, and flavor that's simply unmatched. Catering &amp; community events — one neighborhood at a time.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Book Chef Tee</a>
+      <a href="#about" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-val">2012</div><div class="hstat-lbl">Established</div></div>
+    <div class="hstat"><div class="hstat-val">S. Jersey</div><div class="hstat-lbl">Best Cuisine</div></div>
+    <div class="hstat"><div class="hstat-val">100%</div><div class="hstat-lbl">Community First</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-track">
+  <span class="ticker-item">Southern Cuisine<b>✦</b></span><span class="ticker-item">Event Catering<b>✦</b></span>
+  <span class="ticker-item">Sicklerville, New Jersey<b>✦</b></span><span class="ticker-item">Established 2012<b>✦</b></span>
+  <span class="ticker-item">Hood Stars Program<b>✦</b></span><span class="ticker-item">Community First<b>✦</b></span>
+  <span class="ticker-item">Chef Tee<b>✦</b></span><span class="ticker-item">Southern Cuisine<b>✦</b></span>
+  <span class="ticker-item">Event Catering<b>✦</b></span><span class="ticker-item">Sicklerville, New Jersey<b>✦</b></span>
+  <span class="ticker-item">Established 2012<b>✦</b></span><span class="ticker-item">Hood Stars Program<b>✦</b></span>
+  <span class="ticker-item">Community First<b>✦</b></span><span class="ticker-item">Chef Tee<b>✦</b></span>
+</div></div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-img"><span class="about-img-text">HM</span><div class="about-img-inner"><span class="icon">🍽️</span><p>Southern Cuisine</p></div></div>
+      <div class="about-badge">Est.<br>March 6<br>2012</div>
+    </div>
+    <div>
+      <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>Welcome to Our NeighborHood</span></div>
+      <h2 class="section-title reveal">A Gift &amp;<br><em>A Blessing.</em></h2>
+      <div class="about-content">
+        <p class="reveal">Hood Meals is owned and operated by <strong>Chef Tee — Chef Latisha Mortise</strong>, established March 6, 2012 in Berlin, New Jersey. We offer some of the best southern cuisine in all of South Jersey.</p>
+        <p class="reveal">We use only the highest quality and freshest ingredients to deliver a flavor that is not only unique in style, but unmatched in taste. Bringing home cooked goodness to your door, one neighborhood at a time.</p>
+        <p class="reveal">What does the name Hood Meals mean? It isn't just about top notch flavors — one of our main focus points is our <strong>neighborhood</strong>. So much that it's in the name.</p>
+      </div>
+      <div class="rag reveal">
+        <div class="rag-title">The RAG Method</div>
+        <div class="rag-item"><span class="rag-letter">R</span><span><strong>Remember</strong> names</span></div>
+        <div class="rag-item"><span class="rag-letter">A</span><span><strong>Always</strong> maintain eye contact</span></div>
+        <div class="rag-item"><span class="rag-letter">G</span><span>Have a <strong>Genuine</strong> smile</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>What We Offer</span></div>
+    <h2 class="section-title reveal">Flavor That<br><em>Hits Different.</em></h2>
+    <div class="svc-grid" id="ss">
+      <div class="svc-card reveal">
+        <span class="svc-num">01</span><span class="svc-icon">🍽️</span>
+        <h3>Event Catering</h3>
+        <p>Birthday parties, baby showers, family reunions, graduations, corporate events — whatever the occasion, we bring the soul of southern cooking straight to your event.</p>
+        <div class="svc-tags"><span class="stag">🎂 Birthdays</span><span class="stag">👶 Baby Showers</span><span class="stag">🎓 Graduations</span><span class="stag">🏢 Corporate</span></div>
+      </div>
+      <div class="svc-card reveal">
+        <span class="svc-num">02</span><span class="svc-icon">🏘️</span>
+        <h3>Community Events</h3>
+        <p>We believe in giving back to the neighborhood that gives to us. Hood Meals shows up for the community — block parties, neighborhood gatherings, and everything in between.</p>
+        <div class="svc-tags"><span class="stag">🏘️ Block Parties</span><span class="stag">🤝 Giveback Events</span><span class="stag">🎉 Gatherings</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story">
+  <div class="story-inner">
+    <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>Our Philosophy</span></div>
+    <h2 class="section-title reveal">Built on <span class="gold"><em>Community.</em></span></h2>
+    <p class="story-quote reveal">The only way to grow is up — and we can only do that when we lean on each other.</p>
+    <p class="story-body reveal">Established in 2012, Hood Meals has become a name gaining notoriety across South Jersey. We make every attempt to remember names, always maintain eye contact, and have a genuine smile — the RAG method — the foundation of everything we do.</p>
+    <div class="story-pillars reveal">
+      <div class="pillar"><span class="pillar-icon">🤝</span><h4>Community</h4><p>Neighborhood First</p></div>
+      <div class="pillar"><span class="pillar-icon">🍳</span><h4>Quality</h4><p>Freshest Ingredients</p></div>
+      <div class="pillar"><span class="pillar-icon">❤️</span><h4>Love</h4><p>Made With Purpose</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOOD STARS -->
+<section class="hoodstars" id="hoodstars">
+  <div class="hoodstars-inner">
+    <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>Community Recognition</span></div>
+    <h2 class="section-title reveal">Hood <em>Stars.</em> ⭐</h2>
+    <div class="hs-grid">
+      <div class="hs-content">
+        <p class="reveal" id="shs1">Everyone deserves recognition. We can't possibly get to everyone — so we created <strong>Hood Stars</strong>, a program that recognizes small business owners and their accomplishments in entrepreneurship.</p>
+        <p class="reveal" id="shs2">Each Star is interviewed by one of our hosts and asked about their company and the road to business ownership. <strong>Your story deserves to be told.</strong></p>
+        <a href="mailto:hoodmeals@gmail.com?subject=Hood Stars Application" class="btn-primary reveal" style="display:inline-block;margin-top:16px;text-decoration:none;">Apply for Hood Stars →</a>
+      </div>
+      <div class="hs-card reveal">
+        <div class="hs-card-eyebrow">Community Program</div>
+        <h3>Hood Stars Recognition Program</h3>
+        <p>Recognizing the entrepreneurs and community builders making moves in our neighborhood.</p>
+        <a href="mailto:hoodmeals@gmail.com?subject=Hood Stars Inquiry" class="btn-gold">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOOD NEWS -->
+<section class="hoodnews" id="hoodnews">
+  <div class="hoodnews-inner">
+    <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>Stay Connected</span></div>
+    <h2 class="section-title reveal">Hood <em>News.</em> 📰</h2>
+    <div class="hn-card reveal">
+      <div class="hn-accent"></div>
+      <div class="hn-body">
+        <h3>Hood News Network</h3>
+        <p>Every neighborhood has news to share — new business announcements, community events, local tips. Let us post it for you! We direct our customers to your events while building the community together.</p>
+        <a href="mailto:hoodmeals@gmail.com?subject=Hood News Post" class="btn-outline">Post Your News →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHEF -->
+<section class="chef" id="chef">
+  <div class="chef-inner">
+    <div class="chef-visual reveal">
+      <span class="chef-icon">👩‍🍳</span>
+      <div class="chef-visual-name">Chef Tee</div>
+      <div class="chef-visual-title">Chef Latisha Mortise · Owner &amp; Operator</div>
+    </div>
+    <div class="chef-content">
+      <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>Meet Chef Tee</span></div>
+      <h2 class="section-title reveal">The Woman Behind<br><em>The Magic.</em></h2>
+      <p class="reveal" id="sc1">Chef Tee is certainly like no other. Her southern style is not only unmatched in flavor, but in love, compassion, and genuine kindness.</p>
+      <p class="reveal" id="sc2">As a mother, grandmother, aunt, daughter, and sister — <strong>Chef Tee has dedicated her life to Christ</strong>, and in doing so has spent much of her time giving back to the community and those who taste her cuisine.</p>
+      <div class="chef-quote reveal">
+        <p id="scq">"Not just about food — it's about love, community, and flavor you can feel."</p>
+        <cite>— Chef Tee, Hood Meals</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section class="payment" id="pay">
+  <div class="pay-wrap">
+    <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>Easy Payment</span></div>
+    <h2 class="section-title reveal">Book &amp; <em>Pay Easy.</em></h2>
+    <p class="reveal" style="font-size:15px;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:28px;">Ready to lock in your date? Send your deposit directly through Cash App. Always include your name and event date in the note!</p>
+    <a href="https://cash.app/$LatishaMortise" target="_blank" rel="noopener" class="pay-card reveal" id="pcashapp">
+      <div class="pay-icon">💚</div>
+      <div class="pay-info"><span class="pay-label">Cash App</span><span class="pay-handle" id="pcahandle">$LatishaMortise</span></div>
+      <span class="pay-arrow">→</span>
+    </a>
+    <p class="pay-note reveal"><strong>Deposit Policy:</strong> 50% deposit required to secure your date. Remaining balance due on event day. Always include your name &amp; event date in the note!</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>Get In Touch</span></div>
+      <h2 class="section-title reveal">Book <em>Chef Tee.</em></h2>
+      <p class="reveal" style="font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:32px;">Ready to bring Hood Meals to your next event? Reach out and let's make it happen.</p>
+      <div class="contact-methods reveal">
+        <a href="mailto:hoodmeals@gmail.com" class="contact-method" id="cemail">
+          <div class="cm-icon">✉️</div><div class="cm-info"><span class="cm-label">Email</span><span class="cm-val" id="cemailval">hoodmeals@gmail.com</span></div>
+        </a>
+        <a href="https://facebook.com" target="_blank" class="contact-method" id="cfb">
+          <div class="cm-icon">📘</div><div class="cm-info"><span class="cm-label">Facebook</span><span class="cm-val">Hood Meals</span></div>
+        </a>
+        <a href="https://cash.app/$LatishaMortise" target="_blank" class="contact-method" id="cca">
+          <div class="cm-icon">💚</div><div class="cm-info"><span class="cm-label">Cash App</span><span class="cm-val" id="ccaval">$LatishaMortise</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="reveal">
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group"><label>Your Name</label><input type="text" id="fn" placeholder="Jane Smith" required></div>
+          <div class="form-group"><label>Phone / Email</label><input type="text" id="fe" placeholder="your@email.com" required></div>
+        </div>
+        <div class="form-group">
+          <label>Event Type</label>
+          <select id="fs">
+            <option value="">Select event type...</option>
+            <option>Birthday Party Catering</option>
+            <option>Baby Shower Catering</option>
+            <option>Family Reunion Catering</option>
+            <option>Graduation Party Catering</option>
+            <option>Corporate Event Catering</option>
+            <option>Community Event</option>
+            <option>Hood Stars Program</option>
+            <option>Hood News Post</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Event Date</label><input type="text" id="fd" placeholder="e.g. July 4th, 2025"></div>
+        <div class="form-group"><label>Tell Us More</label><textarea id="fm" placeholder="How many guests? Any special requests?"></textarea></div>
+        <button type="submit" class="form-submit">Send Message →</button>
+        <div class="form-success" id="fsuc">✓ Opening your email — Chef Tee will be in touch soon!</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="eyebrow reveal"><div class="eyebrow-line"></div><span>Southern Cuisine · Berlin, NJ</span></div>
+  <h2 class="reveal">Taste The Difference.</h2>
+  <p class="reveal">Home cooked southern goodness brought to your neighborhood. Book Chef Tee for your next event today.</p>
+  <a href="#contact" class="btn-white reveal">Book Now →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Hood<span>Meals</span></div>
+  <p>&copy; 2024 Hood Meals · Berlin, NJ · Chef Tee · Est. 2012</p>
+  <div class="f-links">
+    <a href="mailto:hoodmeals@gmail.com">Email</a>
+    <a href="https://facebook.com" target="_blank">Facebook</a>
+    <a href="https://cash.app/$LatishaMortise" target="_blank">Cash App</a>
+  </div>
+</footer>
+
+<script>
+/* ===== DATA ===== */
+var CREDS={u:'hoodmeals',p:'cheftee2024'};
+function gl(k,d){try{var v=localStorage.getItem('hm_'+k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function sl(k,v){try{localStorage.setItem('hm_'+k,JSON.stringify(v));}catch(e){}}
+var D={
+  creds:gl('creds',CREDS),
+  email:gl('email','hoodmeals@gmail.com'),
+  fb:gl('fb','https://facebook.com'),
+  ca:gl('ca','https://cash.app/$LatishaMortise'),
+  cah:gl('cah','$LatishaMortise')
+};
+
+/* ===== MOBILE MENU ===== */
+function toggleMenu(){
+  var m=document.getElementById('mobileMenu');
+  var h=document.getElementById('hamburger');
+  m.classList.toggle('open');
+  h.classList.toggle('open');
+  document.body.style.overflow=m.classList.contains('open')?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ===== SECRET ADMIN: Press H then M ===== */
+var hPressed=false,hTimer=null;
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key.toLowerCase()==='h'){
+    hPressed=true;clearTimeout(hTimer);
+    document.getElementById('keyToast').classList.add('show');
+    hTimer=setTimeout(function(){hPressed=false;document.getElementById('keyToast').classList.remove('show');},2000);
+  } else if(e.key.toLowerCase()==='m'&&hPressed){
+    hPressed=false;clearTimeout(hTimer);
+    document.getElementById('keyToast').classList.remove('show');
+    openLogin();
+  }
+});
+
+/* ===== LOGIN ===== */
+function openLogin(){document.getElementById('loginModal').classList.add('open');setTimeout(function(){document.getElementById('lu').focus();},80);}
+function closeLogin(){document.getElementById('loginModal').classList.remove('open');document.getElementById('lerr').style.display='none';}
+function doLogin(){
+  var u=document.getElementById('lu').value.trim(),p=document.getElementById('lp').value;
+  if(u===D.creds.u&&p===D.creds.p){closeLogin();popAdmin();document.getElementById('adminPanel').classList.add('open');document.body.style.overflow='hidden';}
+  else{document.getElementById('lerr').style.display='block';}
+}
+function closeAdmin(){document.getElementById('adminPanel').classList.remove('open');document.body.style.overflow='';}
+document.getElementById('lp').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+document.getElementById('lu').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+
+/* ===== ADMIN POPULATE ===== */
+function popAdmin(){
+  document.getElementById('ae').value=document.getElementById('se').textContent;
+  document.getElementById('ah1').value='Hood';
+  document.getElementById('ah2').value='Meals.';
+  document.getElementById('adesc').value=document.getElementById('sdesc').textContent;
+  document.getElementById('ahs1').value=document.getElementById('shs1').innerText;
+  document.getElementById('ahs2').value=document.getElementById('shs2').innerText;
+  document.getElementById('ac1').value=document.getElementById('sc1').innerText;
+  document.getElementById('ac2').value=document.getElementById('sc2').innerText;
+  document.getElementById('acq').value=document.getElementById('scq').textContent;
+  document.getElementById('ace').value=D.email;
+  document.getElementById('acf').value=D.fb;
+  document.getElementById('aca').value=D.ca;
+  document.getElementById('acah').value=D.cah;
+}
+
+/* ===== SAVE ===== */
+function saveAll(){
+  document.getElementById('se').textContent=document.getElementById('ae').value;
+  document.getElementById('sdesc').textContent=document.getElementById('adesc').value;
+  document.getElementById('shs1').innerHTML=document.getElementById('ahs1').value;
+  document.getElementById('shs2').innerHTML=document.getElementById('ahs2').value;
+  document.getElementById('sc1').innerHTML=document.getElementById('ac1').value;
+  document.getElementById('sc2').innerHTML=document.getElementById('ac2').value;
+  document.getElementById('scq').textContent=document.getElementById('acq').value;
+  D.email=document.getElementById('ace').value;
+  D.fb=document.getElementById('acf').value;
+  D.ca=document.getElementById('aca').value;
+  D.cah=document.getElementById('acah').value;
+  document.getElementById('cemail').href='mailto:'+D.email;
+  document.getElementById('cemailval').textContent=D.email;
+  document.getElementById('cfb').href=D.fb;
+  document.getElementById('cca').href=D.ca;
+  document.getElementById('ccaval').textContent=D.cah;
+  document.getElementById('pcashapp').href=D.ca;
+  document.getElementById('pcahandle').textContent=D.cah;
+  var np=document.getElementById('anp').value,np2=document.getElementById('anp2').value;
+  if(np&&np===np2){D.creds.p=np;sl('creds',D.creds);}
+  ['email','fb','ca','cah'].forEach(function(k){sl(k,D[k]);});
+  var ok=document.getElementById('aok');ok.style.display='block';
+  setTimeout(function(){ok.style.display='none';},2500);
+}
+
+/* ===== SCROLL ===== */
+window.addEventListener('scroll',function(){
+  var sections=['about','services','hoodstars','hoodnews','chef','pay','contact'];
+  var active='';
+  sections.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&window.scrollY>=el.offsetTop-80)active=id;
+  });
+  document.querySelectorAll('.nav-links a:not(.nav-book)').forEach(function(a){
+    a.classList.toggle('active',a.getAttribute('href')==='#'+active);
+  });
+});
+
+/* ===== REVEAL ===== */
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e,i){if(e.isIntersecting)setTimeout(function(){e.target.classList.add('visible');},i*80);});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+
+/* ===== CONTACT FORM ===== */
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=document.getElementById('fn').value,em=document.getElementById('fe').value,sv=document.getElementById('fs').value,dt=document.getElementById('fd').value,msg=document.getElementById('fm').value;
+  var sub=encodeURIComponent('Hood Meals Inquiry — '+sv);
+  var body=encodeURIComponent('Name: '+n+'\nContact: '+em+'\nEvent: '+sv+'\nDate: '+dt+'\n\nMessage:\n'+msg);
+  window.location.href='mailto:'+D.email+'?subject='+sub+'&body='+body;
+  document.getElementById('fsuc').style.display='block';
+});
+</script>
+</body>
+</html>
